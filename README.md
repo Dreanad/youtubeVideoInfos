@@ -5,6 +5,7 @@ Ce package est destiné à facilité la récupération des données d'une vidéo
 
 ## Requirements
 * PHP >= 5.3.0
+* Youtube Api key 
 
 ## Utilisation
 [En construction]
