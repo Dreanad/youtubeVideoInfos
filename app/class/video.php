@@ -43,7 +43,7 @@ class Video
 	 */
 	private $provider;
 
-	private $jsonArray;
+	private $jsonObject;
 
 	/**
 	* Nom de la vidéo
@@ -199,9 +199,9 @@ class Video
 
 		self::parseUrl($urlVideo);
 
-			self::setJsonArray($this->id, $this->apiKey);
-
-
+		self::setJsonObject($this->id, $this->apiKey);
+		self::setName($this->jsonObject->{'items'}[0]->{'snippet'}->{'title'});
+		self::setAuthor($this->jsonObject->{'items'}[0]->{'snippet'}->{'channelTitle'});
 	}
 
 	/**
@@ -221,20 +221,18 @@ class Video
 	}
 
 
-	public function setJsonArray($id, $apiKey){
+	public function setJsonObject($id, $apiKey){
 
 		$jsonVideo = @file_get_contents('https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id='.$id.'&key='.$apiKey);
 
-		if($jsonVideo == false){
-		}
-		else{
-			$this->jsonArray = json_decode($jsonVideo);
-		}
+
+			$this->jsonObject = json_decode($jsonVideo);
+
 
 
 	}
 
-	public function getJsonArray(){
-		return $this->jsonArray;
+	public function getJsonObject(){
+		return $this->jsonObject;
 	}
 }
