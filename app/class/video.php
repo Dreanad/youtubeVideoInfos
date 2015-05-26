@@ -43,7 +43,21 @@ class Video
 	 */
 	private $provider;
 
+	/**
+	 * Object Json information vidéo
+	 *
+	 * @var object $jsonObject
+	 */
 	private $jsonObject;
+
+
+	/**
+	 * Array contenant les thumbnails de la vidéo
+	 *
+	 * @var array() $thumbnails
+	 */
+	private $thumbnails;
+
 
 	/**
 	* Nom de la vidéo
@@ -190,8 +204,8 @@ class Video
 	 * Le constructeur vas permettre de récupérer les informations
 	 * nécéssaire à l'hydratation de l'objet
 	 *
-	 * @param string $urlVideo valeur de l'url vidéo
-	 * @param string $apiKey valeur de l'api key
+	 * @param string $urlVideo 	valeur de l'url vidéo
+	 * @param string $apiKey 	valeur de l'api key
 	 */
 	public function __construct($urlVideo, $apiKey){
 		self::setUrlVideo($urlVideo);
@@ -202,6 +216,7 @@ class Video
 		self::setJsonObject($this->id, $this->apiKey);
 		self::setName($this->jsonObject->{'items'}[0]->{'snippet'}->{'title'});
 		self::setAuthor($this->jsonObject->{'items'}[0]->{'snippet'}->{'channelTitle'});
+		self::setThumbnails($this->jsonObject);
 	}
 
 	/**
@@ -217,22 +232,46 @@ class Video
 
 		$this->setId($id);
 		$this->setProvider($provider);
-
 	}
 
+	/**
+	 * Permet d'ajouter les valeurs aux différentes valeurs de l'attribut Thumbnails
+	 *
+	 * @param object $jsonObject objet Json regroupant les informations de la vidéo
+	 */
+	private function setThumbnails($jsonObject){
+		$this->thumbnails['default'] = $jsonObject->{'items'}[0]->{'snippet'}->{'thumbnails'}->{'default'}->{'url'};
+		$this->thumbnails['medium'] = $jsonObject->{'items'}[0]->{'snippet'}->{'thumbnails'}->{'medium'}->{'url'};
+		$this->thumbnails['high'] = $jsonObject->{'items'}[0]->{'snippet'}->{'thumbnails'}->{'high'}->{'url'};
+	}
 
-	public function setJsonObject($id, $apiKey){
+	/**
+	 * Permet de récupérer la valeur de $thumbnails
+	 *
+	 * Cette méthode peut prendre en compte 3 nom différent, "default", "medium", "high"
+	 * Correspondant au différentes taille du thumbnails
+	 *
+	 * @param 	string $value
+	 *
+	 * @return 	string $thumnails Url de l'image demandé
+	 */
+	public function getThumbnails($value){
+		if($value != "default" OR $value != "medium" OR $value != "high"){
+			return NULL;
+		}
+		else{
+			return $this->thumbnails[$value];
+		}
+	}
 
+	/**
+	 * Permet d'ajouter une valeur à l'attribut $jsonObject
+	 *
+	 * @param string $id 		valeur de l'id video
+	 * @param string $apiKey 	valeur de la clef API
+	 */
+	private function setJsonObject($id, $apiKey){
 		$jsonVideo = @file_get_contents('https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id='.$id.'&key='.$apiKey);
-
-
-			$this->jsonObject = json_decode($jsonVideo);
-
-
-
-	}
-
-	public function getJsonObject(){
-		return $this->jsonObject;
+		$this->jsonObject = json_decode($jsonVideo);
 	}
 }
