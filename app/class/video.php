@@ -12,7 +12,6 @@ namespace App;
  */
 class Video
 {
-
 	/**
 	 * Id unique de la vidéo
 	 *
@@ -50,14 +49,12 @@ class Video
 	 */
 	private $jsonObject;
 
-
 	/**
 	 * Array contenant les thumbnails de la vidéo
 	 *
 	 * @var array() $thumbnails
 	 */
 	private $thumbnails;
-
 
 	/**
 	* Nom de la vidéo
@@ -79,7 +76,6 @@ class Video
 	 * @var string $description
 	 */
 	private $description;
-
 
 	/**
 	 * Permet d'ajouter une valeur à l'attribut id
@@ -256,7 +252,7 @@ class Video
 	 * @return 	string $thumnails Url de l'image demandé
 	 */
 	public function getThumbnails($value){
-		if($value != "default" OR $value != "medium" OR $value != "high"){
+		if($value != "default" && $value != "medium" && $value != "high"){
 			return NULL;
 		}
 		else{
