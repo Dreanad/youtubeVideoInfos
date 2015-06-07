@@ -149,18 +149,38 @@ class Video
 		return $this->nbComment;
 	}
 
+	/**
+	 * Permet d'ajouter une valeur à l'attribut $nbLike
+	 * 
+	 * @param int $value valeur du nombre de Like 
+	 */
 	private setNbLike($value){
 		$this->nbLike = $value;
 	}
 
+	/**
+	 * Permet de récupérer la valeur de l'attribut $nbLike 
+	 * 
+	 * @return int $nbLike Nombre de like sur la vidéo
+	 */ 
 	public function getNbLike(){
 		return $this->nbLike;
 	}
 
+	/**
+	 * Permet d'ajouter une valeur à l'attribut $nbDislike
+	 * 
+	 * @param int $value valeur du nombre de dislike sur la vidéo
+	 */
 	private function setNbDislike($value){
 		$this->nbDisLike = $value;
 	}
 
+	/**
+	 * Permet de récupérer la valeur de l'attribut $nbDislike
+	 * 
+	 * @return int $nbDislike valeur du nombre de dislike sur la vidéo
+	 */
 	public function getNbDislike(){
 		return $this->nbDisLike; 
 	}
@@ -282,26 +302,6 @@ class Video
 		return $this->description;
 	}
 
-	/**
-	 * Constructeur de la classe Video
-	 *
-	 * Le constructeur vas permettre de récupérer les informations
-	 * nécéssaire à l'hydratation de l'objet
-	 *
-	 * @param string $urlVideo 	valeur de l'url vidéo
-	 * @param string $apiKey 	valeur de l'api key
-	 */
-	public function __construct($urlVideo, $apiKey){
-		self::setUrlVideo($urlVideo);
-		self::setApiKey($apiKey);
-
-		self::parseUrl($urlVideo);
-
-		self::setJsonObject($this->id, $this->apiKey);
-		self::setName($this->jsonObject->{'items'}[0]->{'snippet'}->{'title'});
-		self::setAuthor($this->jsonObject->{'items'}[0]->{'snippet'}->{'channelTitle'});
-		self::setThumbnails($this->jsonObject);
-	}
 
 	/**
 	 * Permet de récupérer l'id video et le provider
@@ -357,5 +357,26 @@ class Video
 	private function setJsonObject($id, $apiKey){
 		$jsonVideo = @file_get_contents('https://www.googleapis.com/youtube/v3/videos?part=id%2C+snippet&id='.$id.'&key='.$apiKey);
 		$this->jsonObject = json_decode($jsonVideo);
+	}
+
+	/**
+	 * Constructeur de la classe Video
+	 *
+	 * Le constructeur vas permettre de récupérer les informations
+	 * nécéssaire à l'hydratation de l'objet
+	 *
+	 * @param string $urlVideo 	valeur de l'url vidéo
+	 * @param string $apiKey 	valeur de l'api key
+	 */
+	public function __construct($urlVideo, $apiKey){
+		self::setUrlVideo($urlVideo);
+		self::setApiKey($apiKey);
+
+		self::parseUrl($urlVideo);
+
+		self::setJsonObject($this->id, $this->apiKey);
+		self::setName($this->jsonObject->{'items'}[0]->{'snippet'}->{'title'});
+		self::setAuthor($this->jsonObject->{'items'}[0]->{'snippet'}->{'channelTitle'});
+		self::setThumbnails($this->jsonObject);
 	}
 }

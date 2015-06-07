@@ -4,7 +4,7 @@
 	use \App\Video;
 
 	$urlVideo 	= 'https://www.youtube.com/watch?v=CeacjOkLjZ0';
-	$apiKey 	= 'AIzaSyBuXN1PKvY5gJK2sC4CrSujUyCiFhsUNA';
+	$apiKey 	= '';
 
 	$ma_video 	= new Video($urlVideo, $apiKey);
 
