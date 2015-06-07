@@ -78,6 +78,94 @@ class Video
 	private $description;
 
 	/**
+	 * Nombre de vues de la vidéo 
+	 * 
+	 * @var int $nbVues
+	 */
+	private $nbVues;
+
+	/**
+	 * Nombre de Like sur la vidéo
+	 * 
+	 * @var int $nbLikes
+	 */
+	private $nbLike;
+
+	/**
+	 * Nombre de Dislike sur la vidéo
+	 * 
+	 * @var int $nbDisLikes
+	 */
+	private $nbDisLike;
+
+	/**
+	 * Nombre de commentaire sur la vidéo
+	 * 
+	 * @var int $nbComment
+	 */
+	private $nbComment;
+
+	/**
+	 * Durée de la vidéoau format iso-8601
+	 * 
+	 * @var string $duree
+	 */
+	private $duree;
+
+	/**
+	 * Permet d'ajouter une valeur à l'attribut $duree
+	 * 
+	 * @param string $value valeur de la durée
+	 */
+	private function setDuree($value)
+	{
+		$this->duree = $value;
+	}
+
+	/**
+	 * Permet de récupérer la valeur de l'attribut $duree
+	 * 
+	 * @return string $duree valeur de la durée
+	 */
+	public function getDuree(){
+		return $this->duree;
+	}
+
+	/**
+	 * Permet d'ajouter une valeur à l'attribut $nbComment
+	 * 
+	 * @param int $value valeur du nombre de commentaire
+	 */
+	private function setNbComment($value){
+		$this->nbComment = $value;
+	}
+
+	/**
+	 * Permet de récupérer la valeur de $nbComment
+	 * 
+	 * @return int $nbComment valeur du nombre des commentaires
+	 */
+	public function getNbComment(){
+		return $this->nbComment;
+	}
+
+	private setNbLike($value){
+		$this->nbLike = $value;
+	}
+
+	public function getNbLike(){
+		return $this->nbLike;
+	}
+
+	private function setNbDislike($value){
+		$this->nbDisLike = $value;
+	}
+
+	public function getNbDislike(){
+		return $this->nbDisLike; 
+	}
+
+	/**
 	 * Permet d'ajouter une valeur à l'attribut id
 	 *
 	 * @param string $value valeur de id
